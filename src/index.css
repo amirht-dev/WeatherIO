@@ -1,1 +1,105 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-*: initial;
+  --color-primary: #b5a1e5;
+  --color-primary-fg: #100e17;
+  --color-background: #131214;
+  --color-background-fg: #eae6f2;
+  --color-surface: #1d1c1f;
+  --color-surface-fg: #dddae5;
+  --color-surface-variant-fg: #7b7980;
+  --color-surface-variant-2-fg: #b9b6bf;
+  --color-outline: #3e3d40;
+  --color-bg-aqi-1: #89e589;
+  --color-bg-aqi-1-fg: #1f331f;
+  --color-bg-aqi-2: #e5dd89;
+  --color-bg-aqi-2-fg: #33311f;
+  --color-bg-aqi-3: #e5c089;
+  --color-bg-aqi-3-fg: #332b1f;
+  --color-bg-aqi-4: #e58989;
+  --color-bg-aqi-4-fg: #331f1f;
+  --color-bg-aqi-5: #e589b7;
+  --color-bg-aqi-5-fg: #331f29;
+  --color-white: hsl(0, 0%, 100%);
+  --color-black-alpha-10: hsla(0, 0%, 0%, 0.1);
+
+  --font-nunito-sans: 'Nunito Sans', sans-serif;
+  --default-font-family: var(--font-nunito-sans);
+
+  --font-weight-*: initial;
+  --font-weight-regular: 400;
+  --font-weight-semiBold: 600;
+
+  --text-*: initial;
+  --text-heading: 5.6rem;
+  --text-title-1: 2rem;
+  --text-title-2: 1.8rem;
+  --text-title-3: 1.6rem;
+  --text-body-1: 2.2rem;
+  --text-body-2: 2rem;
+  --text-body-3: 1.6rem;
+  --text-label-1: 1.4rem;
+  --text-label-2: 1.2rem;
+
+  --shadow-*: initial;
+  --shadow-1: 0px 1px 3px hsla(0, 0%, 0%, 0.5);
+  --shadow-1: 0px 3px 6px hsla(0, 0%, 0%, 0.4);
+
+  --radius-*: initial;
+  --radius-lg: 16px;
+  --radius-xl: 28px;
+  --radius-round: 9999px;
+}
+
+@utility gradient-1 {
+  background-image: linear-gradient(
+    180deg,
+    hsla(270, 5%, 7%, 0) 0%,
+    hsla(270, 5%, 7%, 0.8) 65%,
+    hsl(270, 5%, 7%) 100%
+  );
+}
+
+@utility gradient-2 {
+  background-image: linear-gradient(
+    180deg,
+    hsla(260, 5%, 12%, 0) 0%,
+    hsla(260, 5%, 12%, 0.8) 65%,
+    hsl(260, 5%, 12%) 100%
+  );
+}
+
+@layer base {
+  :root {
+    --scrollbar-size: 6px;
+    --scrollbar-color: --alpha(var(--color-white) / 8%);
+    --scrollbar-radius: var(--radius-round);
+  }
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth text-[10px];
+  }
+  body {
+    @apply font-nunito-sans bg-background text-background-fg text-body-3 selection:bg-white/8;
+  }
+  :focus-visible {
+    @apply outline-2 outline-solid outline-white;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-color) transparent;
+  }
+  ::-webkit-scrollbar {
+    @apply size-(--scrollbar-size);
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-(--scrollbar-color);
+  }
+  /* *:hover {
+    scrollbar-color: --alpha(var(--color-white) / 10%) transparent;
+  } */
+}
