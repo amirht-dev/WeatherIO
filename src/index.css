@@ -70,6 +70,37 @@
   );
 }
 
+@utility ripple {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    clip-path: circle(100% at 50% 50%);
+    transition: 100ms ease;
+    border-radius: inherit;
+  }
+
+  &:hover::before {
+    background-color: --alpha(var(--color-white) / 4%);
+  }
+
+  &:is(:focus, :focus-visible)::before {
+    background-color: --alpha(var(--color-white) / 8%);
+    animation: ripple 250ms ease forwards;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    clip-path: circle(0% at 50% 50%);
+  }
+  100% {
+    clip-path: circle(100% at 50% 50%);
+  }
+}
+
 @layer base {
   :root {
     --scrollbar-size: 6px;
