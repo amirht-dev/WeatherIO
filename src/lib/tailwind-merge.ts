@@ -61,6 +61,4 @@ export const config: ConfigExtension<
   },
 };
 
-const twMerge = extendTailwindMerge(config);
-
-export default twMerge;
+export const twMerge = extendTailwindMerge(config);

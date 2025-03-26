@@ -1,4 +1,4 @@
-import twMerge from '@/lib/tailwind-merge';
+import { twMerge } from '@/lib/tailwind-merge';
 import { Slot } from '@radix-ui/react-slot';
 import { ComponentPropsWithoutRef } from 'react';
 
