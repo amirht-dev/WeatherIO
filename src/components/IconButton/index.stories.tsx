@@ -14,3 +14,15 @@ export default meta;
 type Story<T = typeof meta> = StoryObj<T>;
 
 export const Default = {} satisfies Story;
+
+export const Ghost = {
+  args: {
+    color: 'ghost',
+  },
+} satisfies Story;
+
+export const Primary = {
+  args: {
+    color: 'primary',
+  },
+} satisfies Story;
