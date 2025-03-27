@@ -12,7 +12,7 @@ export type SearchBoxProps = Merge<
 
 const SearchBox = ({ icon, loading = false, ...props }: SearchBoxProps) => {
   return (
-    <div className="flex items-center gap-2 border-b border-outline py-2">
+    <div className="flex items-center gap-2 border-b px-3 border-outline py-2">
       {icon}
       <input
         {...props}
