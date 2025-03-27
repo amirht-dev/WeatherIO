@@ -33,6 +33,7 @@ export const config: ConfigExtension<
         'bg-aqi-5-fg',
         'white',
         'black',
+        'transparent',
       ],
       radius: ['lg', 'xl', 'round'],
       shadow: ['1', '2'],
