@@ -8,7 +8,7 @@ const Loading = forwardRef<HTMLSpanElement, ComponentPropsWithoutRef<'span'>>(
         {...props}
         ref={ref}
         className={twMerge(
-          'size-6 inline-block rounded-full border-2 border-surface-fg border-t-transparent animate-spin',
+          'size-6 aspect-square inline-block rounded-full border-2 border-surface-fg border-t-transparent animate-spin',
           props.className
         )}
         style={{ animationDuration: '600ms', ...props.style }}
