@@ -13,7 +13,7 @@ type SearchItemProps = Merge<
 const SearchItem = ({ title, subtitle }: SearchItemProps) => {
   return (
     <li className="list-none">
-      <a href="#" className="flex items-center gap-4 px-6 py-2 ripple">
+      <a href="#" className="flex items-center gap-4 px-4 py-2 ripple">
         <MapPin className="size-6 text-surface-variant-fg" />
         <div className="flex flex-col">
           <p>{title}</p>
