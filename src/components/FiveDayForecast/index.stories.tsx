@@ -11,5 +11,5 @@ export default meta;
 type Story<T = typeof meta> = StoryObj<T>;
 
 export const Default = {
-  name: 'FiveDayForecastCard',
+  name: 'FiveDayForecast',
 } satisfies Story;
