@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import FiveDayForecastCard from '.';
+import FiveDayForecast from '.';
 
 const meta = {
-  component: FiveDayForecastCard,
+  component: FiveDayForecast,
   tags: ['!autodocs'],
-} satisfies Meta<typeof FiveDayForecastCard>;
+} satisfies Meta<typeof FiveDayForecast>;
 
 export default meta;
 
