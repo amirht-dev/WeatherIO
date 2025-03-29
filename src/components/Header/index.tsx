@@ -8,7 +8,7 @@ import { View, ViewClose, ViewContent, ViewTrigger } from '../View';
 
 const Header = () => {
   return (
-    <header className="py-4 sticky top-0 backdrop-blur-3xl">
+    <header className="py-4 sticky top-0 z-10 backdrop-blur-3xl">
       <div className="container flex items-center justify-between">
         <Logo className="w-[150px]" />
 
