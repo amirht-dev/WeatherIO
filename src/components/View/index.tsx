@@ -9,6 +9,7 @@ import {
   forwardRef,
   RefCallback,
   useCallback,
+  useEffect,
   useId,
   useRef,
   useState,
@@ -62,6 +63,14 @@ export const ViewContent = forwardRef<
   );
 
   const combinedRef = useCombineRefs(ref, callbackRef);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [open]);
 
   return (
     <Portal>
