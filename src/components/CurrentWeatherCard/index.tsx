@@ -8,7 +8,13 @@ const CurrentWeatherCard = () => {
       <CardTitle>Now</CardTitle>
 
       <div className="flex items-center justify-between my-3">
-        <h1 className="text-heading">25&deg;c</h1>
+        <h1 className="text-heading">
+          25
+          <span className="text-surface-variant-fg">
+            &deg;
+            <small>C</small>
+          </span>
+        </h1>
 
         <img
           src="/images/weather_icons/01d.png"

@@ -7,7 +7,10 @@ const HourlyForecast = () => {
   });
 
   return (
-    <section aria-label="hourly forecast">
+    <section
+      aria-label="hourly forecast"
+      className="overflow-hidden order-4 tablet:col-span-2"
+    >
       <h2 className="text-title-2 mb-2">Today at</h2>
 
       <div className="overflow-hidden select-none" ref={emblaRef}>
@@ -50,10 +53,11 @@ const HourForeCastCard = ({ hour, type, value }: HourForecastProps) => (
     />
 
     <p className="text-body-3">
-      {type === 'temp' ? <>{value}&deg;</> : value}
-      <small className="text-surface-variant-fg">
-        {type === 'temp' ? 'C' : 'km/h'}
-      </small>
+      {value}
+      <span className="text-surface-variant-fg">
+        {type === 'temp' && <>&deg;</>}
+        <small>{type === 'temp' ? 'C' : 'km/h'}</small>
+      </span>
     </p>
   </Card>
 );
