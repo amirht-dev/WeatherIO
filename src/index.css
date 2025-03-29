@@ -24,6 +24,9 @@
   --color-white: hsl(0, 0%, 100%);
   --color-black: hsl(0, 0%, 0%);
 
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 48rem;
+
   --font-nunito-sans: 'Nunito Sans', sans-serif;
   --default-font-family: var(--font-nunito-sans);
 
