@@ -13,6 +13,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import Portal from '../Portal';
 
 const { context: ViewContext, hook: useViewContext } = createCTX<{
   open: boolean;
@@ -63,18 +64,20 @@ export const ViewContent = forwardRef<
   const combinedRef = useCombineRefs(ref, callbackRef);
 
   return (
-    <Transition
-      as="div"
-      show={open}
-      {...props}
-      data-view-id={id}
-      ref={combinedRef}
-      className={twMerge(
-        'view-content fixed inset-0 duration-300 z-10 bg-surface text-surface-fg',
-        'data-[closed]:opacity-0',
-        'data-[enter]:animate-view-expand data-[leave]:animate-view-collapse'
-      )}
-    />
+    <Portal>
+      <Transition
+        as="div"
+        show={open}
+        {...props}
+        data-view-id={id}
+        ref={combinedRef}
+        className={twMerge(
+          'view-content fixed inset-0 duration-300 z-20 bg-surface text-surface-fg',
+          'data-[closed]:opacity-0',
+          'data-[enter]:animate-view-expand data-[leave]:animate-view-collapse'
+        )}
+      />
+    </Portal>
   );
 });
 ViewContent.displayName = 'ViewContent';
