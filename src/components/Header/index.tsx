@@ -1,4 +1,5 @@
 import { ArrowLeft, LocateFixedIcon, Search } from 'lucide-react';
+import Button from '../Button';
 import IconButton from '../IconButton';
 import Logo from '../Logo';
 import SearchBox from '../SearchBox';
@@ -38,9 +39,16 @@ const Header = () => {
             </ViewContent>
           </View>
 
-          <IconButton color="primary">
+          <IconButton color="primary" className="tablet:hidden">
             <LocateFixedIcon />
           </IconButton>
+
+          <Button
+            prefixIcon={<LocateFixedIcon />}
+            className="max-tablet:hidden"
+          >
+            Current Location
+          </Button>
         </div>
       </div>
     </header>

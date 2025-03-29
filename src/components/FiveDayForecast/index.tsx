@@ -2,12 +2,12 @@ import { Card } from '../Card';
 
 const FiveDayForecast = () => {
   return (
-    <section aria-labelledby="forecast-label">
-      <h2 id="forecast-label" className="mb-2 text-title-2">
+    <section aria-labelledby="forecast-label" className="order-3">
+      <h2 id="forecast-label" className="mb-2 tablet:mb-3 text-title-2">
         5 Days Forecast
       </h2>
       <Card size="lg" asChild>
-        <ul className="space-y-3">
+        <ul className="space-y-3 tablet:space-y-4">
           {Array.from({ length: 5 }, (_, idx) => (
             <li className="flex items-center" key={idx}>
               <img

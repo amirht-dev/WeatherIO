@@ -11,7 +11,7 @@ const HourlyForecast = () => {
       aria-label="hourly forecast"
       className="overflow-hidden order-4 tablet:col-span-2"
     >
-      <h2 className="text-title-2 mb-2">Today at</h2>
+      <h2 className="text-title-2 mb-2 tablet:mb-3">Today at</h2>
 
       <div className="overflow-hidden select-none" ref={emblaRef}>
         <div className="flex gap-3">

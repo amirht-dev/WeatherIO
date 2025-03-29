@@ -9,13 +9,13 @@ function App() {
   return (
     <div className="flex flex-col min-h-dvh">
       <Header />
-      <main className="container flex-1 relative space-y-4">
+      <main className="container grid-rows-[masonry] flex-1 relative grid grid-cols-1 tablet:grid-cols-[280px_1fr] gap-4">
         <CurrentWeatherCard />
         <FiveDayForecast />
         <TodayHighlights />
         <HourlyForecast />
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }

@@ -23,7 +23,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={twMerge(
           'bg-surface text-surface-fg',
-          size === 'lg' ? 'p-4 rounded-lg' : 'p-5 rounded-xl',
+          size === 'lg'
+            ? 'p-4 rounded-lg tablet:p-5'
+            : 'p-5 tablet:p-6 rounded-xl',
           props.className
         )}
       />
@@ -42,7 +44,7 @@ export const CardTitle = forwardRef<
     <Comp
       {...props}
       ref={ref}
-      className={twMerge('text-title-2', props.className)}
+      className={twMerge('text-title-2 tablet:mb-4', props.className)}
     />
   );
 });

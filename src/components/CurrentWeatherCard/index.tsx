@@ -4,7 +4,7 @@ import { Card, CardTitle } from '../Card';
 
 const CurrentWeatherCard = () => {
   return (
-    <Card size="lg" aria-label="current weather">
+    <Card size="lg" aria-label="current weather" className="order-1">
       <CardTitle>Now</CardTitle>
 
       <div className="flex items-center justify-between my-3">
