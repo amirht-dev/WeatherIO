@@ -21,6 +21,7 @@ const CurrentWeatherCard = () => {
           width={64}
           height={64}
           alt="Overcast Clouds"
+          className="w-16 laptop:w-20"
         />
       </div>
 

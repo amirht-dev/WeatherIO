@@ -1,4 +1,9 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { twMerge } from '@/lib/tailwind-merge';
+import {
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  ReactNode,
+} from 'react';
 import { Merge } from 'type-fest';
 import Loading from '../Loading';
 
@@ -7,12 +12,24 @@ export type SearchBoxProps = Merge<
   {
     icon?: ReactNode;
     loading?: boolean;
+    wrapperProps?: ComponentPropsWithRef<'div'>;
   }
 >;
 
-const SearchBox = ({ icon, loading = false, ...props }: SearchBoxProps) => {
+const SearchBox = ({
+  icon,
+  loading = false,
+  wrapperProps,
+  ...props
+}: SearchBoxProps) => {
   return (
-    <div className="flex items-center gap-2 border-b px-3 border-outline py-2">
+    <div
+      {...wrapperProps}
+      className={twMerge(
+        'flex items-center gap-2 border-b px-3 border-outline py-2',
+        wrapperProps?.className
+      )}
+    >
       {icon}
       <input
         {...props}

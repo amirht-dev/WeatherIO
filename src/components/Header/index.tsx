@@ -9,12 +9,20 @@ import { View, ViewClose, ViewContent, ViewTrigger } from '../View';
 
 const Header = () => {
   return (
-    <header className="py-4 sticky top-0 z-10 backdrop-blur-3xl">
+    <header className="py-4 laptop:py-6 sticky top-0 z-10 backdrop-blur-3xl">
       <div className="container flex items-center justify-between">
-        <Logo className="w-[150px]" />
+        <Logo className="w-[150px] laptop:w-[200px]" />
+
+        <SearchBox
+          wrapperProps={{
+            className:
+              'w-[400px] max-laptop:hidden bg-surface border-none rounded-xl',
+          }}
+          icon={<Search />}
+        />
 
         <div className="flex items-center gap-4">
-          <View>
+          <View className="laptop:hidden">
             <ViewTrigger asChild>
               <IconButton>
                 <Search />

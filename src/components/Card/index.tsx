@@ -24,8 +24,8 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         className={twMerge(
           'bg-surface text-surface-fg',
           size === 'lg'
-            ? 'p-4 rounded-lg tablet:p-5'
-            : 'p-5 tablet:p-6 rounded-xl',
+            ? 'p-4 rounded-lg tablet:p-5 laptop:p-6'
+            : 'p-5 tablet:p-6 rounded-xl laptop:p-9',
           props.className
         )}
       />

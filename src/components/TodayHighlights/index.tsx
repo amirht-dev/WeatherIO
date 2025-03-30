@@ -74,11 +74,14 @@ const AirQualityIndex = () => (
     </div>
 
     <div className="flex items-center gap-4">
-      <Wind className="size-8 tablet:size-9" />
+      <Wind className="size-8 tablet:size-9 laptop:size-12" />
 
-      <ul className="grid grid-cols-2 justify-items-end gap-4 flex-1">
+      <ul className="grid grid-cols-2 laptop:grid-cols-4 justify-items-end gap-4 flex-1">
         {Array.from({ length: 4 }, (_, idx) => (
-          <li key={idx} className="flex gap-1 items-center grow">
+          <li
+            key={idx}
+            className="flex gap-1 items-center grow laptop:flex-col-reverse"
+          >
             <p className="text-title-1">23.3</p>
             <p className="text-label-1 text-surface-variant-fg">
               PM<sub>2.5</sub>
@@ -96,7 +99,7 @@ const SunriseAndSunset = () => (
 
     <div className="flex items-center">
       <div className="flex items-center flex-1 gap-2">
-        <Sun className="size-8 tablet:size-9" />
+        <Sun className="size-8 tablet:size-9 laptop:size-12" />
 
         <div className="">
           <p className="text-label-1 text-surface-variant-fg">Sunrise</p>
@@ -107,7 +110,7 @@ const SunriseAndSunset = () => (
       </div>
 
       <div className="flex items-center flex-1 gap-2">
-        <Moon className="size-8 tablet:size-9" />
+        <Moon className="size-8 tablet:size-9 laptop:size-12" />
 
         <div className="">
           <p className="text-label-1 text-surface-variant-fg">Sunset</p>
@@ -125,7 +128,7 @@ const Humidity = () => (
     <TodayHighlightCardTitle>Humidity</TodayHighlightCardTitle>
 
     <div className="flex items-center gap-4 justify-between">
-      <Droplet className="size-8 tablet:size-9" />
+      <Droplet className="size-8 tablet:size-9 laptop:size-12" />
       <p className="text-title-1">
         35<small className="text-surface-variant-fg">%</small>
       </p>
@@ -138,7 +141,7 @@ const Pressure = () => (
     <TodayHighlightCardTitle>Pressure</TodayHighlightCardTitle>
 
     <div className="flex items-center gap-4 justify-between">
-      <Waves className="size-8 tablet:size-9" />
+      <Waves className="size-8 tablet:size-9 laptop:size-12" />
       <p className="text-title-1">
         1052<small className="text-surface-variant-fg">hPa</small>
       </p>
@@ -151,7 +154,7 @@ const Visibility = () => (
     <TodayHighlightCardTitle>Visibility</TodayHighlightCardTitle>
 
     <div className="flex items-center gap-4 justify-between">
-      <Eye className="size-8 tablet:size-9" />
+      <Eye className="size-8 tablet:size-9 laptop:size-12" />
       <p className="text-title-1">
         10<small className="text-surface-variant-fg">km</small>
       </p>
@@ -164,7 +167,7 @@ const FeelsLike = () => (
     <TodayHighlightCardTitle>Feels Like</TodayHighlightCardTitle>
 
     <div className="flex items-center gap-4 justify-between">
-      <Thermometer className="size-8 tablet:size-9" />
+      <Thermometer className="size-8 tablet:size-9 laptop:size-12" />
       <p className="text-title-1">
         25<span className="text-surface-variant-fg">&deg;c</span>
       </p>
