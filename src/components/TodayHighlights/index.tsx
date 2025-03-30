@@ -97,7 +97,7 @@ const SunriseAndSunset = () => (
   <TodayHighlightCard className="tablet:col-span-2">
     <TodayHighlightCardTitle>Sunrise & Sunset</TodayHighlightCardTitle>
 
-    <div className="flex items-center">
+    <div className="flex items-center tablet:gap-5">
       <div className="flex items-center flex-1 gap-2">
         <Sun className="size-8 tablet:size-9 laptop:size-12" />
 
