@@ -5,7 +5,7 @@ import sortBy from 'lodash/sortBy';
 import toPairs from 'lodash/toPairs';
 import { ComponentType } from 'react';
 import { Entries } from 'type-fest';
-import { Breakpoint, breakpoints } from '../constants';
+import { Breakpoint, breakpoints } from '../../constants';
 
 type PropsResponsive<P> = {
   [K in keyof P]: Partial<Record<keyof typeof breakpoints, P[K]>>;

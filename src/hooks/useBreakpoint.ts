@@ -1,4 +1,4 @@
-import { breakpoints } from '@/components/constants';
+import { breakpoints } from '@/constants';
 import { useEffect, useState } from 'react';
 import type { Entries } from 'type-fest';
 

@@ -41,6 +41,7 @@
   --breakpoint-*: initial;
   --breakpoint-tablet: 48rem;
   --breakpoint-laptop: 75rem;
+  --breakpoint-desktop: 87.5rem;
 
   --font-nunito-sans: 'Nunito Sans', sans-serif;
   --default-font-family: var(--font-nunito-sans);
