@@ -8,7 +8,7 @@ import SearchList from '../SearchList';
 import { View, ViewClose, ViewContent, ViewTrigger } from '../View';
 
 const SearchView = () => {
-  const { term, setTerm, query } = useSearchContext();
+  const { term, setTerm, debouncedTerm, query } = useSearchContext();
 
   const { isLoading, data } = query;
 
@@ -21,7 +21,7 @@ const SearchView = () => {
       </ViewTrigger>
 
       <ViewContent>
-        <Input>
+        <Input className="border-b border-outline">
           <ViewClose asChild>
             <IconButton className="bg-transparent">
               <ArrowLeft />
@@ -34,25 +34,26 @@ const SearchView = () => {
             onChange={(e) => setTerm(e.target.value)}
           />
         </Input>
-        {isLoading ? (
-          <div className="flex items-center justify-center h-[100px]">
-            <Loading />
-          </div>
-        ) : data?.length ? (
-          <SearchList>
-            {data.map((item) => (
-              <SearchItem
-                key={item.id}
-                title={item.label}
-                subtitle={`subtitle of ${item.label}`}
-              />
-            ))}
-          </SearchList>
-        ) : (
-          <div className="flex items-center justify-center h-[100px] text-surface-variant-fg italic">
-            city not exists
-          </div>
-        )}
+        {!!debouncedTerm &&
+          (isLoading ? (
+            <div className="flex items-center justify-center h-[100px]">
+              <Loading />
+            </div>
+          ) : data ? (
+            data.length ? (
+              <SearchList>
+                {data.map((item) => (
+                  <ViewClose asChild key={item.id}>
+                    <SearchItem location={item} />
+                  </ViewClose>
+                ))}
+              </SearchList>
+            ) : (
+              <div className="flex items-center justify-center h-[100px] text-surface-variant-fg italic">
+                city not exists
+              </div>
+            )
+          ) : null)}
       </ViewContent>
     </View>
   );

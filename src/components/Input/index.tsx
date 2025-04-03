@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
         {...props}
         ref={ref}
         className={twMerge(
-          'flex items-center gap-2 border-b px-3 border-outline py-2 laptop:px-4 laptop:py-3',
+          'flex items-center gap-2 px-3 py-2 laptop:px-4 laptop:py-3',
           props.className
         )}
       />
