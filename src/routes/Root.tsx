@@ -9,7 +9,7 @@ const RootPage = () => {
   return (
     <div className="flex flex-col min-h-dvh">
       <Header />
-      <main className="container grid-rows-[masonry] flex-1 relative grid grid-cols-1 tablet:grid-cols-[280px_1fr] laptop:grid-cols-[360px_1fr] gap-4 laptop:gap-10">
+      <main className="container tablet:grid-rows-[masonry] flex-1 relative grid grid-cols-1 tablet:grid-cols-[280px_1fr] laptop:grid-cols-[360px_1fr] gap-4 laptop:gap-10">
         <CurrentWeatherCard />
         <FiveDayForecast />
         <TodayHighlights />

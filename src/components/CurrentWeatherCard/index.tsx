@@ -19,7 +19,7 @@ const CurrentWeatherCard = () => {
       <CardTitle>Now</CardTitle>
 
       <div className="flex items-center justify-between my-3">
-        <h1 className="text-heading">
+        <h1 className="text-heading laptop:text-[4rem]">
           {data?.current.temp_c}
           <span className="text-surface-variant-fg">
             &deg;

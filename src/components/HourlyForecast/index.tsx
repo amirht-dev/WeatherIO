@@ -9,7 +9,7 @@ const HourlyForecast = () => {
   return (
     <section
       aria-label="hourly forecast"
-      className="overflow-hidden order-4 tablet:col-span-2"
+      className="overflow-hidden order-4 tablet:max-desktop:col-span-2"
     >
       <h2 className="text-title-2 mb-2 tablet:mb-3">Today at</h2>
 
@@ -45,11 +45,9 @@ const HourForeCastCard = ({ hour, type, value }: HourForecastProps) => (
 
     <img
       src={`/images/weather_icons/${type === 'temp' ? '01n' : 'direction'}.png`}
-      width={48}
-      height={48}
       loading="lazy"
       alt=""
-      className="my-3"
+      className="my-3 w-12 desktop:w-8"
     />
 
     <p className="text-body-3">

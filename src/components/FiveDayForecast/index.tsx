@@ -7,7 +7,7 @@ const FiveDayForecast = () => {
         5 Days Forecast
       </h2>
       <Card size="lg" asChild>
-        <ul className="space-y-3 tablet:space-y-4">
+        <ul className="space-y-3 tablet:space-y-4 desktop:space-y-6">
           {Array.from({ length: 5 }, (_, idx) => (
             <li className="flex items-center" key={idx}>
               <img
