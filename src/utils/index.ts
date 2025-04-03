@@ -41,3 +41,13 @@ export function createCTX<TContext>(
     hook,
   };
 }
+
+export function formatDate(date: Date | number) {
+  const parts = Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'short',
+  }).formatToParts(date);
+
+  return `${parts[0].value} ${parts[4].value}, ${parts[2].value}`;
+}

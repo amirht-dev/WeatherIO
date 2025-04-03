@@ -1,12 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-import { getLocations, Location } from '@/services/api';
+import { getLocations, SearchLocation } from '@/services/api';
 import { createCTX } from '@/utils';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useDebounce } from '@uidotdev/usehooks';
 import { PropsWithChildren, useState } from 'react';
 
 export type SearchContextType = {
-  query: UseQueryResult<Location[], Error>;
+  query: UseQueryResult<SearchLocation[], Error>;
   term: string;
   setTerm: React.Dispatch<React.SetStateAction<string>>;
   isDebouncing: boolean;
@@ -24,7 +24,7 @@ const SearchProvider = (props: PropsWithChildren) => {
   const isDebouncing = term !== debouncedTerm;
 
   const query = useQuery({
-    queryKey: ['search', term],
+    queryKey: ['search', debouncedTerm],
     queryFn: ({ signal }) => getLocations(term, signal),
     enabled: !!debouncedTerm && !isDebouncing,
   });

@@ -16,7 +16,7 @@ import {
 } from 'react';
 import Portal from '../Portal';
 
-const { context: ViewContext, hook: useViewContext } = createCTX<{
+export const { context: ViewContext, hook: useViewContext } = createCTX<{
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   id: string;

@@ -1,28 +1,32 @@
 import { validateLocationQuery } from '@/utils/validators';
-import useSearchParams from './useSearchParams';
+import toast from 'react-hot-toast';
+import { useSearchParams } from 'react-router';
 
 const LOCATION_QUERY_PARAM_NAME = 'q';
 
-function useLocationParams(errorCb?: (err: string) => void) {
+function useLocationSearchParam(errorCb?: () => void) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const locationQuery = searchParams.get(LOCATION_QUERY_PARAM_NAME);
+  let locationQuery = searchParams.get(LOCATION_QUERY_PARAM_NAME);
 
   if (locationQuery != null) {
     const locationValidateResult = validateLocationQuery(locationQuery);
 
-    if (!locationValidateResult.success)
-      errorCb?.(locationValidateResult.error);
-
-    if (!locationValidateResult.success)
-      errorCb?.(locationValidateResult.error);
+    if (!locationValidateResult.success) {
+      toast.error(locationValidateResult.error);
+      errorCb?.();
+      locationQuery = null;
+    }
   }
 
   const set = (location: string) => {
     const locationValidateResult = validateLocationQuery(location);
 
-    if (!locationValidateResult.success)
-      return errorCb?.(locationValidateResult.error);
+    if (!locationValidateResult.success) {
+      toast.error(locationValidateResult.error);
+      errorCb?.();
+      return;
+    }
 
     const newParams = new URLSearchParams(searchParams);
     newParams.set(LOCATION_QUERY_PARAM_NAME, locationValidateResult.data);
@@ -33,4 +37,4 @@ function useLocationParams(errorCb?: (err: string) => void) {
   return [locationQuery, set] as const;
 }
 
-export default useLocationParams;
+export default useLocationSearchParam;

@@ -1,5 +1,5 @@
-import useLocationParams from '@/hooks/useLocationParams';
-import { Location } from '@/services/api';
+import useLocationParams from '@/hooks/useLocationSearchParam';
+import { SearchLocation } from '@/services/api';
 import { MapPin } from 'lucide-react';
 import { ComponentPropsWithoutRef } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -8,7 +8,7 @@ import { Merge } from 'type-fest';
 type SearchItemProps = Merge<
   ComponentPropsWithoutRef<'li'>,
   {
-    location: Location;
+    location: SearchLocation;
   }
 >;
 
@@ -17,9 +17,7 @@ const SearchItem = ({ location, ...props }: SearchItemProps) => {
 
   const [, setLocationParam] = useLocationParams();
 
-  const handleChangeLocation = () => {
-    setLocationParam(url);
-  };
+  const handleChangeLocation = () => setLocationParam(url);
 
   return (
     <li {...props} className={twMerge('list-none', props.className)}>
