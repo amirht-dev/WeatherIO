@@ -19,6 +19,11 @@ const SearchBox = () => {
 
   const { isLoading, data } = query;
 
+  const handleSearchItemClick = () => {
+    setOpen(false);
+    setTerm('');
+  };
+
   return (
     <Autocomplete
       open={!!term && !isDebouncing && open}
@@ -54,7 +59,11 @@ const SearchBox = () => {
         ) : data?.length ? (
           <SearchList>
             {data?.map((item) => (
-              <AutocompleteItem asChild key={item.id}>
+              <AutocompleteItem
+                asChild
+                key={item.id}
+                onClick={handleSearchItemClick}
+              >
                 <SearchItem location={item} />
               </AutocompleteItem>
             ))}

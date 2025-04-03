@@ -1,3 +1,4 @@
+import useLocationParams from '@/hooks/useLocationParams';
 import { Location } from '@/services/api';
 import { MapPin } from 'lucide-react';
 import { ComponentPropsWithoutRef } from 'react';
@@ -12,10 +13,20 @@ type SearchItemProps = Merge<
 >;
 
 const SearchItem = ({ location, ...props }: SearchItemProps) => {
-  const { name, region, country } = location;
+  const { name, region, country, url } = location;
+
+  const [, setLocationParam] = useLocationParams();
+
+  const handleChangeLocation = () => {
+    setLocationParam(url);
+  };
+
   return (
     <li {...props} className={twMerge('list-none', props.className)}>
-      <button className="flex items-center gap-4 px-4 py-2 ripple w-full">
+      <button
+        className="flex items-center gap-4 px-4 py-2 ripple w-full"
+        onClickCapture={handleChangeLocation}
+      >
         <MapPin className="size-6 text-surface-variant-fg" />
         <div className="flex flex-col items-start">
           <p>{name}</p>
