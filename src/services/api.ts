@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Merge, MergeDeep } from 'type-fest';
 
 const API_KEY = '468bde4f35c04e6cb70162009250104';
 
@@ -8,6 +9,13 @@ const weatherAxios = axios.create({
     key: API_KEY,
   },
 });
+
+export type WithAirQuality<T> = Merge<
+  T,
+  {
+    air_quality: WeatherAirQuality;
+  }
+>;
 
 export type SearchLocation = {
   id: number;
@@ -19,12 +27,18 @@ export type SearchLocation = {
   url: string;
 };
 
-export type CurrentWeatherResponse = {
-  location: CurrentWeatherLocation;
-  current: CurrentWeatherData;
+export type WeatherLocation = {
+  name: string;
+  region: string;
+  country: string;
+  lat: number;
+  lon: number;
+  tz_id: string;
+  localtime_epoch: number;
+  localtime: string;
 };
 
-export type CurrentWeatherData = {
+export type CurrentWeather = {
   last_updated_epoch: number;
   last_updated: string;
   temp_c: number;
@@ -54,8 +68,9 @@ export type CurrentWeatherData = {
   uv: number;
   gust_mph: number;
   gust_kph: number;
-  air_quality: AirQuality;
 };
+
+export type CurrentWeatherWithAirQuality = WithAirQuality<CurrentWeather>;
 
 export type WeatherCondition = {
   text: string;
@@ -63,7 +78,7 @@ export type WeatherCondition = {
   code: number;
 };
 
-export type AirQuality = {
+export type WeatherAirQuality = {
   co: number;
   no2: number;
   o3: number;
@@ -74,16 +89,132 @@ export type AirQuality = {
   'gb-defra-index': number;
 };
 
-export type CurrentWeatherLocation = {
-  name: string;
-  region: string;
-  country: string;
-  lat: number;
-  lon: number;
-  tz_id: string;
-  localtime_epoch: number;
-  localtime: string;
+export type Forecast = {
+  forecastday: ForecastDay[];
 };
+
+export type ForecastDay = {
+  date: Date;
+  date_epoch: number;
+  day: WeatherDay;
+  astro: WeatherAstro;
+  hour: WeatherHour[];
+};
+
+export type ForecastDayWithAirQuality = MergeDeep<
+  ForecastDay,
+  {
+    day: WeatherDayWithAirQuality;
+    hour: WeatherHourWithAirQuality[];
+  }
+>;
+
+export type WeatherAstro = {
+  sunrise: string;
+  sunset: string;
+  moonrise: string;
+  moonset: string;
+  moon_phase: string;
+  moon_illumination: number;
+  is_moon_up: number;
+  is_sun_up: number;
+};
+
+export type WeatherDay = {
+  maxtemp_c: number;
+  maxtemp_f: number;
+  mintemp_c: number;
+  mintemp_f: number;
+  avgtemp_c: number;
+  avgtemp_f: number;
+  maxwind_mph: number;
+  maxwind_kph: number;
+  totalprecip_mm: number;
+  totalprecip_in: number;
+  totalsnow_cm: number;
+  avgvis_km: number;
+  avgvis_miles: number;
+  avghumidity: number;
+  daily_will_it_rain: number;
+  daily_chance_of_rain: number;
+  daily_will_it_snow: number;
+  daily_chance_of_snow: number;
+  condition: WeatherCondition;
+  uv: number;
+};
+
+export type WeatherDayWithAirQuality = WithAirQuality<WeatherDay>;
+
+export type WeatherHour = {
+  time_epoch: number;
+  time: string;
+  temp_c: number;
+  temp_f: number;
+  is_day: number;
+  condition: WeatherCondition;
+  wind_mph: number;
+  wind_kph: number;
+  wind_degree: number;
+  wind_dir: string;
+  pressure_mb: number;
+  pressure_in: number;
+  precip_mm: number;
+  precip_in: number;
+  snow_cm: number;
+  humidity: number;
+  cloud: number;
+  feelslike_c: number;
+  feelslike_f: number;
+  windchill_c: number;
+  windchill_f: number;
+  heatindex_c: number;
+  heatindex_f: number;
+  dewpoint_c: number;
+  dewpoint_f: number;
+  will_it_rain: number;
+  chance_of_rain: number;
+  will_it_snow: number;
+  chance_of_snow: number;
+  vis_km: number;
+  vis_miles: number;
+  gust_mph: number;
+  gust_kph: number;
+  uv: number;
+};
+
+export type WeatherHourWithAirQuality = WithAirQuality<WeatherHour>;
+
+export type CurrentResponse = {
+  location: WeatherLocation;
+  current: CurrentWeather;
+};
+
+export type CurrentWithAirQualityResponse = {
+  location: WeatherLocation;
+  current: CurrentWeatherWithAirQuality;
+};
+
+export type ForecastResponse = {
+  location: WeatherLocation;
+  current: CurrentWeather;
+  forecast: Forecast;
+};
+
+export type ForecastWithAirQualityResponse = MergeDeep<
+  {
+    location: WeatherLocation;
+    current: CurrentWeather;
+    forecast: Forecast;
+  },
+  {
+    current: CurrentWeatherWithAirQuality;
+    forecast: {
+      forecastday: ForecastDayWithAirQuality[];
+    };
+  }
+>;
+
+export type SearchResponse = SearchLocation[];
 
 export async function getLocations(name: string, signal?: AbortSignal) {
   const res = await weatherAxios.get<SearchLocation[]>('/search.json', {
@@ -96,12 +227,31 @@ export async function getLocations(name: string, signal?: AbortSignal) {
   return res.data;
 }
 
-export async function getCurrentWeather(query: string, signal?: AbortSignal) {
-  const res = await weatherAxios.get<CurrentWeatherResponse>('/current.json', {
+type CurrentWeatherOptions<TAqi extends boolean> = {
+  aqi?: TAqi;
+  signal?: AbortSignal;
+};
+
+export async function getCurrentWeather(
+  query: string,
+  options?: CurrentWeatherOptions<true>
+): Promise<CurrentWithAirQualityResponse>;
+export async function getCurrentWeather(
+  query: string,
+  options?: CurrentWeatherOptions<false>
+): Promise<CurrentResponse>;
+export async function getCurrentWeather(
+  query: string,
+  options?: CurrentWeatherOptions<boolean>
+): Promise<CurrentResponse | CurrentWeatherWithAirQuality> {
+  const res = await weatherAxios.get<
+    CurrentResponse | CurrentWeatherWithAirQuality
+  >('/current.json', {
     params: {
       q: query,
+      aqi: options?.aqi ?? true,
     },
-    signal,
+    signal: options?.signal,
   });
 
   return res.data;
