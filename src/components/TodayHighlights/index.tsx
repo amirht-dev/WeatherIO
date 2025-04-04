@@ -175,18 +175,23 @@ const SunriseAndSunset = () => (
   </TodayHighlightCard>
 );
 
-const Humidity = () => (
-  <TodayHighlightCard>
-    <TodayHighlightCardTitle>Humidity</TodayHighlightCardTitle>
+const Humidity = () => {
+  const { data } = useCurrentWeatherQuery();
 
-    <div className="flex items-center gap-4 justify-between">
-      <Droplet className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
-      <p className="text-title-1 desktop:text-body-1">
-        35<small className="text-surface-variant-fg">%</small>
-      </p>
-    </div>
-  </TodayHighlightCard>
-);
+  return (
+    <TodayHighlightCard>
+      <TodayHighlightCardTitle>Humidity</TodayHighlightCardTitle>
+
+      <div className="flex items-center gap-4 justify-between">
+        <Droplet className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
+        <p className="text-title-1 desktop:text-body-1">
+          {data?.current.humidity}
+          <small className="text-surface-variant-fg">%</small>
+        </p>
+      </div>
+    </TodayHighlightCard>
+  );
+};
 
 const Pressure = () => (
   <TodayHighlightCard>
