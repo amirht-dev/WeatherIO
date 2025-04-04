@@ -287,8 +287,6 @@ export async function getForecastWeather<TAqi extends boolean = false>(
     signal: options?.signal,
   });
 
-  res.data.forecast.forecastday = res.data.forecast.forecastday.slice(1);
-
   return res.data as TAqi extends true
     ? ForecastWithAirQualityResponse
     : ForecastResponse;

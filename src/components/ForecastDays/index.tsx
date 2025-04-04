@@ -2,19 +2,19 @@ import useForecastQuery from '@/hooks/useForecastQuery';
 import { formatDateToParts } from '@/utils';
 import { Card } from '../Card';
 
-const FiveDayForecast = () => {
+const ForecastDays = () => {
   const { data } = useForecastQuery({
-    days: 5,
+    days: 7,
   });
 
   return (
     <section aria-labelledby="forecast-label" className="order-3">
       <h2 id="forecast-label" className="mb-2 tablet:mb-3 text-title-2">
-        5 Days Forecast
+        7 Days Forecast
       </h2>
       <Card size="lg" asChild>
-        <ul className="space-y-3 tablet:space-y-4 desktop:space-y-6">
-          {data?.forecast.forecastday.map((day) => {
+        <ul className="space-y-3 tablet:space-y-4">
+          {data?.forecast.forecastday.slice(1).map((day) => {
             const dateParts = formatDateToParts(new Date(day.date));
             return (
               <li
@@ -48,4 +48,4 @@ const FiveDayForecast = () => {
   );
 };
 
-export default FiveDayForecast;
+export default ForecastDays;
