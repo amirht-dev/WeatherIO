@@ -216,6 +216,11 @@ export type ForecastWithAirQualityResponse = MergeDeep<
 
 export type SearchResponse = SearchLocation[];
 
+type BaseWeatherOptions<TAqi extends boolean> = {
+  aqi?: TAqi;
+  signal?: AbortSignal;
+};
+
 export async function getLocations(name: string, signal?: AbortSignal) {
   const res = await weatherAxios.get<SearchLocation[]>('/search.json', {
     params: {
@@ -227,10 +232,8 @@ export async function getLocations(name: string, signal?: AbortSignal) {
   return res.data;
 }
 
-type CurrentWeatherOptions<TAqi extends boolean> = {
-  aqi?: TAqi;
-  signal?: AbortSignal;
-};
+export type CurrentWeatherOptions<TAqi extends boolean> =
+  BaseWeatherOptions<TAqi>;
 
 export async function getCurrentWeather(
   query: string,
@@ -255,4 +258,33 @@ export async function getCurrentWeather(
   });
 
   return res.data;
+}
+
+export type ForecastWeatherOptions<TAqi extends boolean> = Merge<
+  BaseWeatherOptions<TAqi>,
+  {
+    days: number;
+  }
+>;
+
+export async function getForecastWeather<TAqi extends boolean = false>(
+  query: string,
+  options?: ForecastWeatherOptions<TAqi>
+) {
+  const res = await weatherAxios.get<
+    ForecastResponse | ForecastWithAirQualityResponse
+  >('/forecast.json', {
+    params: {
+      q: query,
+      aqi: options?.aqi ?? false,
+      days: options?.days ? options.days + 1 : undefined,
+    },
+    signal: options?.signal,
+  });
+
+  res.data.forecast.forecastday = res.data.forecast.forecastday.slice(1);
+
+  return res.data as TAqi extends true
+    ? ForecastWithAirQualityResponse
+    : ForecastResponse;
 }
