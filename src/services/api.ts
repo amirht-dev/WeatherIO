@@ -17,26 +17,30 @@ export type WithAirQuality<T> = Merge<
   }
 >;
 
-export type SearchLocation = {
-  id: number;
+type BaseLocation = {
   name: string;
   region: string;
   country: string;
   lat: number;
   lon: number;
-  url: string;
 };
 
-export type WeatherLocation = {
-  name: string;
-  region: string;
-  country: string;
-  lat: number;
-  lon: number;
-  tz_id: string;
-  localtime_epoch: number;
-  localtime: string;
-};
+export type SearchLocation = Merge<
+  BaseLocation,
+  {
+    id: number;
+    url: string;
+  }
+>;
+
+export type WeatherLocation = Merge<
+  BaseLocation,
+  {
+    tz_id: string;
+    localtime_epoch: number;
+    localtime: string;
+  }
+>;
 
 export type CurrentWeather = {
   last_updated_epoch: number;
