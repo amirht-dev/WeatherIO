@@ -193,18 +193,23 @@ const Humidity = () => {
   );
 };
 
-const Pressure = () => (
-  <TodayHighlightCard>
-    <TodayHighlightCardTitle>Pressure</TodayHighlightCardTitle>
+const Pressure = () => {
+  const { data } = useCurrentWeatherQuery();
 
-    <div className="flex items-center gap-4 justify-between">
-      <Waves className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
-      <p className="text-title-1 desktop:text-body-1">
-        1052<small className="text-surface-variant-fg">hPa</small>
-      </p>
-    </div>
-  </TodayHighlightCard>
-);
+  return (
+    <TodayHighlightCard>
+      <TodayHighlightCardTitle>Pressure</TodayHighlightCardTitle>
+
+      <div className="flex items-center gap-4 justify-between">
+        <Waves className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
+        <p className="text-title-1 desktop:text-body-1">
+          {data?.current.pressure_mb}
+          <small className="text-surface-variant-fg">mb</small>
+        </p>
+      </div>
+    </TodayHighlightCard>
+  );
+};
 
 const Visibility = () => (
   <TodayHighlightCard>
