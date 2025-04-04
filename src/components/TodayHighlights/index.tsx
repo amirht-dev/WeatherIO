@@ -91,7 +91,7 @@ const AirQualityIndex = () => {
 
   const aqiIndex = aqi?.['us-epa-index'] ?? 1;
 
-  const aqiContent = aqiText[aqiIndex];
+  const aqiContent = aqiText[aqiIndex - 1];
 
   return (
     <TodayHighlightCard className="tablet:col-span-2">
