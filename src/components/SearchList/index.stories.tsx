@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import SearchList from '.';
 import SearchItem from '../SearchItem';
-import SearchItemMeta from '../SearchItem/index.stories';
+import * as SearchItemStories from '../SearchItem/index.stories';
 
 const meta = {
   component: SearchList,
@@ -12,7 +12,7 @@ const meta = {
     children: (
       <>
         {Array.from({ length: 10 }, (_, idx) => (
-          <SearchItem key={idx} {...SearchItemMeta.args} />
+          <SearchItem key={idx} {...SearchItemStories.Tehran.args} />
         ))}
       </>
     ),

@@ -6,14 +6,22 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
-  args: {
-    title: 'London',
-    subtitle: 'State of London, GB',
-  },
 } satisfies Meta<typeof SearchItem>;
 
 export default meta;
 
 type Story<T = typeof meta> = StoryObj<T>;
 
-export const Default = {} satisfies Story;
+export const Tehran = {
+  args: {
+    location: {
+      id: 1261532,
+      name: 'Tehran',
+      region: 'Tehran',
+      country: 'Iran',
+      lat: 35.73,
+      lon: 51.33,
+      url: 'tehran-tehran-iran',
+    },
+  },
+} satisfies Story;
