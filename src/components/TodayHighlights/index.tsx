@@ -1,3 +1,5 @@
+import { aqiText } from '@/constants';
+import useCurrentWeatherQuery from '@/hooks/useCurrentWeatherQuery';
 import {
   Droplet,
   Eye,
@@ -7,7 +9,11 @@ import {
   Waves,
   Wind,
 } from 'lucide-react';
-import { ComponentPropsWithoutRef, ComponentPropsWithRef } from 'react';
+import {
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  ReactNode,
+} from 'react';
 import { twJoin } from 'tailwind-merge';
 import Badge from '../Badge';
 import { Card, CardTitle } from '../Card';
@@ -65,33 +71,79 @@ const TodayHighlightCardTitle = ({
   );
 };
 
-const AirQualityIndex = () => (
-  <TodayHighlightCard className="tablet:col-span-2">
-    <div className="flex items-start justify-between">
-      <TodayHighlightCardTitle>Air Quality Index</TodayHighlightCardTitle>
-
-      <Badge>Good</Badge>
-    </div>
-
-    <div className="flex items-center gap-4">
-      <Wind className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
-
-      <ul className="grid grid-cols-2 laptop:grid-cols-4 justify-items-end gap-4 flex-1">
-        {Array.from({ length: 4 }, (_, idx) => (
-          <li
-            key={idx}
-            className="flex gap-1 items-center grow laptop:flex-col-reverse"
-          >
-            <p className="text-title-1 desktop:text-body-1">23.3</p>
-            <p className="text-label-1 text-surface-variant-fg">
-              PM<sub>2.5</sub>
-            </p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </TodayHighlightCard>
+const AirQualityItem = ({
+  label,
+  value,
+}: {
+  label: ReactNode;
+  value: ReactNode;
+}) => (
+  <li className="flex gap-1 items-center grow laptop:flex-col-reverse">
+    <p className="text-title-1 desktop:text-body-1">{value}</p>
+    <p className="text-label-1 text-surface-variant-fg">{label}</p>
+  </li>
 );
+
+const AirQualityIndex = () => {
+  const { data } = useCurrentWeatherQuery();
+
+  const aqi = data?.current.air_quality;
+
+  const aqiIndex = aqi?.['us-epa-index'] ?? 1;
+
+  const aqiContent = aqiText[aqiIndex];
+
+  return (
+    <TodayHighlightCard className="tablet:col-span-2">
+      <div className="flex items-start justify-between">
+        <TodayHighlightCardTitle>Air Quality Index</TodayHighlightCardTitle>
+
+        <Badge severity={aqiIndex} title={aqiContent.desc}>
+          {aqiContent.levelText}
+        </Badge>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <Wind className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
+
+        <ul className="grid grid-cols-2 laptop:grid-cols-4 justify-items-end gap-4 flex-1">
+          <AirQualityItem
+            label={
+              <>
+                PM<sub>2.5</sub>
+              </>
+            }
+            value={aqi?.pm2_5}
+          />
+          <AirQualityItem
+            label={
+              <>
+                SO<sub>2</sub>
+              </>
+            }
+            value={aqi?.so2}
+          />
+          <AirQualityItem
+            label={
+              <>
+                NO<sub>2</sub>
+              </>
+            }
+            value={aqi?.no2}
+          />
+          <AirQualityItem
+            label={
+              <>
+                O<sub>3</sub>
+              </>
+            }
+            value={aqi?.o3}
+          />
+        </ul>
+      </div>
+    </TodayHighlightCard>
+  );
+};
 
 const SunriseAndSunset = () => (
   <TodayHighlightCard className="tablet:col-span-2">

@@ -9,22 +9,26 @@ export type Breakpoint = keyof typeof breakpoints;
 export const aqiText = [
   {
     levelText: 'Good',
-    desc: 'Air quality considered satisfactory, and air pollution poses little or no risk.',
-  },
-  {
-    levelText: 'Fair',
-    desc: 'Air quality is acceptable; however, for some pollution there may be a moderate health concern for very small number of people who are unusually sensitive to air pollutions.',
+    desc: 'Air quality is satisfactory, and pollution poses little or no risk to health.',
   },
   {
     levelText: 'Moderate',
-    desc: 'Members of sensitive groups may experience health effects. the general public is not likely to be affected.',
+    desc: 'Air quality is acceptable, but there may be moderate health concerns for a small number of sensitive individuals.',
   },
   {
-    levelText: 'Poor',
-    desc: 'Every one may begin to experience health effects, members of sensitive groups may experience more serious health effects.',
+    levelText: 'Sensitive Risk',
+    desc: 'Sensitive groups may experience health effects. The general public is less likely to be affected.',
   },
   {
-    levelText: 'Very Poor',
-    desc: 'health warning for emergency conditions. The entire population is more likely to be affected.',
+    levelText: 'Unhealthy',
+    desc: 'Everyone may begin to experience health effects; sensitive groups face more serious risks.',
+  },
+  {
+    levelText: 'Very Unhealthy',
+    desc: 'Health alert: the entire population is more likely to be affected with significant health risks.',
+  },
+  {
+    levelText: 'Hazardous',
+    desc: 'Emergency conditions: the air is severely polluted, posing serious health risks to all.',
   },
 ];

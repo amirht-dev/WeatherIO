@@ -239,30 +239,48 @@ export async function getLocations(name: string, signal?: AbortSignal) {
 export type CurrentWeatherOptions<TAqi extends boolean> =
   BaseWeatherOptions<TAqi>;
 
-export async function getCurrentWeather(
+export async function getCurrentWeather<TAqi extends boolean = true>(
   query: string,
-  options?: CurrentWeatherOptions<true>
-): Promise<CurrentWithAirQualityResponse>;
-export async function getCurrentWeather(
-  query: string,
-  options?: CurrentWeatherOptions<false>
-): Promise<CurrentResponse>;
-export async function getCurrentWeather(
-  query: string,
-  options?: CurrentWeatherOptions<boolean>
-): Promise<CurrentResponse | CurrentWeatherWithAirQuality> {
+  options?: CurrentWeatherOptions<TAqi>
+) {
   const res = await weatherAxios.get<
     CurrentResponse | CurrentWeatherWithAirQuality
   >('/current.json', {
     params: {
       q: query,
-      aqi: options?.aqi ?? true,
+      aqi: options?.aqi != null ? (options.aqi ? 'yes' : 'no') : 'yes',
     },
     signal: options?.signal,
   });
 
-  return res.data;
+  return res.data as TAqi extends true
+    ? CurrentWithAirQualityResponse
+    : CurrentResponse;
 }
+// export async function getCurrentWeather(
+//   query: string,
+//   options?: CurrentWeatherOptions<true>
+// ): Promise<CurrentWithAirQualityResponse>;
+// export async function getCurrentWeather(
+//   query: string,
+//   options?: CurrentWeatherOptions<false>
+// ): Promise<CurrentResponse>;
+// export async function getCurrentWeather(
+//   query: string,
+//   options?: CurrentWeatherOptions<boolean>
+// ): Promise<CurrentResponse | CurrentWeatherWithAirQuality> {
+//   const res = await weatherAxios.get<
+//     CurrentResponse | CurrentWeatherWithAirQuality
+//   >('/current.json', {
+//     params: {
+//       q: query,
+//       aqi: options?.aqi ?? true,
+//     },
+//     signal: options?.signal,
+//   });
+
+//   return res.data;
+// }
 
 export type ForecastWeatherOptions<TAqi extends boolean> = Merge<
   BaseWeatherOptions<TAqi>,
