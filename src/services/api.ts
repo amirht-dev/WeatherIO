@@ -220,6 +220,13 @@ export type ForecastWithAirQualityResponse = MergeDeep<
 
 export type SearchResponse = SearchLocation[];
 
+export type AstronomyResponse = {
+  location: WeatherLocation;
+  astronomy: {
+    astro: WeatherAstro;
+  };
+};
+
 type BaseWeatherOptions<TAqi extends boolean> = {
   aqi?: TAqi;
   signal?: AbortSignal;
@@ -257,30 +264,6 @@ export async function getCurrentWeather<TAqi extends boolean = true>(
     ? CurrentWithAirQualityResponse
     : CurrentResponse;
 }
-// export async function getCurrentWeather(
-//   query: string,
-//   options?: CurrentWeatherOptions<true>
-// ): Promise<CurrentWithAirQualityResponse>;
-// export async function getCurrentWeather(
-//   query: string,
-//   options?: CurrentWeatherOptions<false>
-// ): Promise<CurrentResponse>;
-// export async function getCurrentWeather(
-//   query: string,
-//   options?: CurrentWeatherOptions<boolean>
-// ): Promise<CurrentResponse | CurrentWeatherWithAirQuality> {
-//   const res = await weatherAxios.get<
-//     CurrentResponse | CurrentWeatherWithAirQuality
-//   >('/current.json', {
-//     params: {
-//       q: query,
-//       aqi: options?.aqi ?? true,
-//     },
-//     signal: options?.signal,
-//   });
-
-//   return res.data;
-// }
 
 export type ForecastWeatherOptions<TAqi extends boolean> = Merge<
   BaseWeatherOptions<TAqi>,
@@ -309,4 +292,22 @@ export async function getForecastWeather<TAqi extends boolean = false>(
   return res.data as TAqi extends true
     ? ForecastWithAirQualityResponse
     : ForecastResponse;
+}
+
+export type AstronomyOptions = {
+  signal?: AbortSignal;
+  dt?: Date;
+};
+
+export async function getAstronomy(query: string, options?: AstronomyOptions) {
+  const date = options?.dt ?? new Date();
+  const res = await weatherAxios.get<AstronomyResponse>('/astronomy.json', {
+    params: {
+      q: query,
+      dt: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
+    },
+    signal: options?.signal,
+  });
+
+  return res.data;
 }
