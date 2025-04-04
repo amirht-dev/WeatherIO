@@ -229,15 +229,20 @@ const Visibility = () => {
   );
 };
 
-const FeelsLike = () => (
-  <TodayHighlightCard>
-    <TodayHighlightCardTitle>Feels Like</TodayHighlightCardTitle>
+const FeelsLike = () => {
+  const { data } = useCurrentWeatherQuery();
 
-    <div className="flex items-center gap-4 justify-between">
-      <Thermometer className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
-      <p className="text-title-1 desktop:text-body-1">
-        25<span className="text-surface-variant-fg">&deg;c</span>
-      </p>
-    </div>
-  </TodayHighlightCard>
-);
+  return (
+    <TodayHighlightCard>
+      <TodayHighlightCardTitle>Feels Like</TodayHighlightCardTitle>
+
+      <div className="flex items-center gap-4 justify-between">
+        <Thermometer className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
+        <p className="text-title-1 desktop:text-body-1">
+          {data?.current.feelslike_c}
+          <span className="text-surface-variant-fg">&deg;c</span>
+        </p>
+      </div>
+    </TodayHighlightCard>
+  );
+};
