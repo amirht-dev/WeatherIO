@@ -1,4 +1,5 @@
 import { aqiText } from '@/constants';
+import useAstronomyQuery from '@/hooks/useAstronomyQuery';
 import useCurrentWeatherQuery from '@/hooks/useCurrentWeatherQuery';
 import {
   Droplet,
@@ -145,35 +146,55 @@ const AirQualityIndex = () => {
   );
 };
 
-const SunriseAndSunset = () => (
-  <TodayHighlightCard className="tablet:col-span-2">
-    <TodayHighlightCardTitle>Sunrise & Sunset</TodayHighlightCardTitle>
+const SunriseAndSunset = () => {
+  const { data } = useAstronomyQuery();
 
-    <div className="flex items-center tablet:gap-5">
-      <div className="flex items-center flex-1 gap-2">
-        <Sun className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
+  return (
+    <TodayHighlightCard className="tablet:col-span-2">
+      <TodayHighlightCardTitle>Sunrise & Sunset</TodayHighlightCardTitle>
 
-        <div className="">
-          <p className="text-label-1 text-surface-variant-fg">Sunrise</p>
-          <p className="text-title-1 desktop:text-body-1">
-            6:30 <small className="text-surface-variant-fg">AM</small>
-          </p>
+      <div className="flex items-center tablet:gap-5">
+        <div className="flex items-center flex-1 gap-2">
+          <Sun className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
+
+          <div className="">
+            <p className="text-label-1 text-surface-variant-fg">Sunrise</p>
+            <p className="text-title-1 desktop:text-body-1">
+              {data?.astronomy.astro.sunrise
+                .split(' ')
+                .map((val, idx) =>
+                  idx === 0 ? (
+                    val
+                  ) : (
+                    <small className="text-surface-variant-fg"> {val}</small>
+                  )
+                )}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center flex-1 gap-2">
+          <Moon className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
+
+          <div className="">
+            <p className="text-label-1 text-surface-variant-fg">Sunset</p>
+            <p className="text-title-1 desktop:text-body-1">
+              {data?.astronomy.astro.sunset
+                .split(' ')
+                .map((val, idx) =>
+                  idx === 0 ? (
+                    val
+                  ) : (
+                    <small className="text-surface-variant-fg"> {val}</small>
+                  )
+                )}
+            </p>
+          </div>
         </div>
       </div>
-
-      <div className="flex items-center flex-1 gap-2">
-        <Moon className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
-
-        <div className="">
-          <p className="text-label-1 text-surface-variant-fg">Sunset</p>
-          <p className="text-title-1 desktop:text-body-1">
-            5:54 <small className="text-surface-variant-fg">PM</small>
-          </p>
-        </div>
-      </div>
-    </div>
-  </TodayHighlightCard>
-);
+    </TodayHighlightCard>
+  );
+};
 
 const Humidity = () => {
   const { data } = useCurrentWeatherQuery();
