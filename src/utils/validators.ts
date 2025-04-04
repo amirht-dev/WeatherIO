@@ -3,7 +3,7 @@ export function validateLocationQuery(
 ): { success: true; data: string } | { success: false; error: string } {
   const matchesUrl = /^[a-z]+(-[a-z]+)*[a-z]+$/i.test(location);
   const matchesCoords =
-    /^-?([0-8]?[0-9](\.[0-9]+)?|90(\.0+)?)\/-?([0-9]?[0-9](\.[0-9]+)?|1[0-7][0-9](\.[0-9]+)?|180(\.0+)?)$/i.test(
+    /^-?([0-8]?[0-9](\.[0-9]+)?|90(\.0+)?),-?([0-9]?[0-9](\.[0-9]+)?|1[0-7][0-9](\.[0-9]+)?|180(\.0+)?)$/i.test(
       location
     );
 
@@ -16,6 +16,6 @@ export function validateLocationQuery(
   return {
     success: false,
     error:
-      'location is invalid. use city-region-country or latitude/longitude formats',
+      'location is invalid. use city-region-country or latitude,longitude formats',
   };
 }

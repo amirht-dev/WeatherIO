@@ -55,3 +55,9 @@ export function formatDateToParts(date: Date | number) {
     monthName: parts[2].value,
   };
 }
+
+export function getCurrentPosition() {
+  return new Promise<GeolocationPosition>((res, rej) => {
+    navigator.geolocation.getCurrentPosition(res, rej);
+  });
+}
