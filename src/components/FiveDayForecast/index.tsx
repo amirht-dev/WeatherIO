@@ -17,21 +17,26 @@ const FiveDayForecast = () => {
           {data?.forecast.forecastday.map((day) => {
             const dateParts = formatDateToParts(new Date(day.date));
             return (
-              <li className="flex items-center" key={day.date.toString()}>
-                <img
-                  src={day.day.condition.icon}
-                  width={36}
-                  height={36}
-                  alt="Overcast Clouds"
-                />
+              <li
+                className="grid grid-cols-3 items-center"
+                key={day.date.toString()}
+              >
+                <div className="flex items-center gap-2">
+                  <img
+                    src={day.day.condition.icon}
+                    width={36}
+                    height={36}
+                    alt="Overcast Clouds"
+                  />
 
-                <p className="text-title-2 ms-2">{day.day.avgtemp_c}</p>
+                  <p className="text-title-2">{day.day.avgtemp_c}</p>
+                </div>
 
-                <p className="text-label-1 text-surface-variant-fg font-semiBold ms-auto">
+                <p className="text-label-1 text-surface-variant-fg font-semiBold justify-self-end">
                   {dateParts.day} {dateParts.monthName}
                 </p>
 
-                <p className="text-label-1 text-surface-variant-fg font-semiBold ms-auto">
+                <p className="text-label-1 text-surface-variant-fg font-semiBold justify-self-end">
                   {dateParts.weekDayName}
                 </p>
               </li>
