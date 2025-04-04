@@ -1,6 +1,6 @@
 import useCurrentWeatherQuery from '@/hooks/useCurrentWeatherQuery';
 import useLocationParams from '@/hooks/useLocationSearchParam';
-import { formatDate } from '@/utils';
+import { formatDateToParts } from '@/utils';
 import { Calendar, MapPin } from 'lucide-react';
 import { PropsWithChildren, ReactNode } from 'react';
 import { Card, CardTitle } from '../Card';
@@ -8,6 +8,12 @@ import { Card, CardTitle } from '../Card';
 const CurrentWeatherCard = () => {
   const [location] = useLocationParams();
   const { data } = useCurrentWeatherQuery();
+
+  const dateParts = formatDateToParts(
+    new Date(data?.location.localtime ?? Date.now())
+  );
+
+  const formattedDate = `${dateParts.weekDayName} ${dateParts.day}, ${dateParts.monthName}`;
 
   return (
     <Card
@@ -39,9 +45,7 @@ const CurrentWeatherCard = () => {
       <p className="text-body-3 capitalize">{data?.current.condition.text}</p>
 
       <ul className="mt-4 pt-4 border-t border-outline space-y-3">
-        <MetaListItem icon={<Calendar />}>
-          {formatDate(new Date(data?.location.localtime ?? Date.now()))}
-        </MetaListItem>
+        <MetaListItem icon={<Calendar />}>{formattedDate}</MetaListItem>
 
         <MetaListItem icon={<MapPin />}>
           {data?.location.name}, {data?.location.country}

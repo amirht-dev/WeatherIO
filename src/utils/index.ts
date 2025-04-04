@@ -42,12 +42,16 @@ export function createCTX<TContext>(
   };
 }
 
-export function formatDate(date: Date | number) {
+export function formatDateToParts(date: Date | number) {
   const parts = Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: '2-digit',
     month: 'short',
   }).formatToParts(date);
 
-  return `${parts[0].value} ${parts[4].value}, ${parts[2].value}`;
+  return {
+    weekDayName: parts[0].value,
+    day: parts[4].value,
+    monthName: parts[2].value,
+  };
 }
