@@ -211,18 +211,23 @@ const Pressure = () => {
   );
 };
 
-const Visibility = () => (
-  <TodayHighlightCard>
-    <TodayHighlightCardTitle>Visibility</TodayHighlightCardTitle>
+const Visibility = () => {
+  const { data } = useCurrentWeatherQuery();
 
-    <div className="flex items-center gap-4 justify-between">
-      <Eye className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
-      <p className="text-title-1 desktop:text-body-1">
-        10<small className="text-surface-variant-fg">km</small>
-      </p>
-    </div>
-  </TodayHighlightCard>
-);
+  return (
+    <TodayHighlightCard>
+      <TodayHighlightCardTitle>Visibility</TodayHighlightCardTitle>
+
+      <div className="flex items-center gap-4 justify-between">
+        <Eye className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
+        <p className="text-title-1 desktop:text-body-1">
+          {data?.current.vis_km}
+          <small className="text-surface-variant-fg">km</small>
+        </p>
+      </div>
+    </TodayHighlightCard>
+  );
+};
 
 const FeelsLike = () => (
   <TodayHighlightCard>
