@@ -10,20 +10,9 @@ const Footer = () => {
       </p>
 
       <p className="text-body-3 flex items-center gap-1">
-        Powered By{' '}
-        <a
-          href="https://openweathermap.org/api"
-          title="Free OpenWeather Api"
-          target="_blank"
-          rel="noopener"
-        >
-          <img
-            src="/images/openweather.png"
-            width={150}
-            height={50}
-            alt="OpenWeather"
-            loading="lazy"
-          />
+        Powered by{' '}
+        <a href="https://www.weatherapi.com/" title="Free Weather API">
+          WeatherAPI.com
         </a>
       </p>
     </footer>
