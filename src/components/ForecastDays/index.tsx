@@ -1,9 +1,10 @@
 import useForecastQuery from '@/hooks/useForecastQuery';
 import { formatDateToParts } from '@/utils';
 import { Card } from '../Card';
+import Skeleton from '../Skeleton';
 
 const ForecastDays = () => {
-  const { data } = useForecastQuery({
+  const { data, isLoading } = useForecastQuery({
     days: 7,
   });
 
@@ -14,30 +15,44 @@ const ForecastDays = () => {
       </h2>
       <Card size="lg" asChild>
         <ul className="space-y-3 tablet:space-y-4">
-          {data?.forecast.forecastday.slice(1).map((day) => {
-            const dateParts = formatDateToParts(new Date(day.date));
+          {(
+            data?.forecast.forecastday.slice(1) ?? Array<null>(7).fill(null)
+          ).map((day, idx) => {
+            const dateParts = day
+              ? formatDateToParts(new Date(day.date))
+              : undefined;
             return (
               <li
                 className="grid grid-cols-3 items-center"
-                key={day.date.toString()}
+                key={day?.date.toString() ?? idx}
               >
                 <div className="flex items-center gap-2">
-                  <img
-                    src={day.day.condition.icon}
-                    width={36}
-                    height={36}
-                    alt="Overcast Clouds"
-                  />
+                  <Skeleton loading={isLoading} className="size-9">
+                    <img
+                      src={day?.day.condition.icon}
+                      width={36}
+                      height={36}
+                      alt={day?.day.condition.text}
+                    />
+                  </Skeleton>
 
-                  <p className="text-title-2">{day.day.avgtemp_c}</p>
+                  <p className="text-title-2">
+                    <Skeleton loading={isLoading} className="w-[50px]">
+                      {day?.day.avgtemp_c}
+                    </Skeleton>
+                  </p>
                 </div>
 
                 <p className="text-label-1 text-surface-variant-fg font-semiBold justify-self-end">
-                  {dateParts.day} {dateParts.monthName}
+                  <Skeleton loading={isLoading} className="w-[60px]">
+                    {dateParts?.day} {dateParts?.monthName}
+                  </Skeleton>
                 </p>
 
                 <p className="text-label-1 text-surface-variant-fg font-semiBold justify-self-end">
-                  {dateParts.weekDayName}
+                  <Skeleton loading={isLoading} className="w-[60px]">
+                    {dateParts?.weekDayName}
+                  </Skeleton>
                 </p>
               </li>
             );
