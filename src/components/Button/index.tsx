@@ -16,7 +16,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithAsChild<ButtonProps>>(
         {...props}
         ref={ref}
         className={twMerge(
-          'bg-primary text-primary-fg h-10 px-4 rounded-full disabled:bg-outline disabled:text-surface-variant-fg disabled:cursor-not-allowed ripple',
+          'bg-primary text-primary-fg h-10 px-4 rounded-full disabled:bg-outline disabled:text-surface-variant-fg cursor-pointer disabled:cursor-not-allowed not-disabled:ripple',
           (!!prefixIcon || !!suffixIcon) && 'flex items-center gap-3',
           className
         )}

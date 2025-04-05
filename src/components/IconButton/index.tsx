@@ -20,7 +20,7 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         {...props}
         ref={ref}
         className={twMerge(
-          'aspect-square ripple size-10 grid place-items-center rounded-full',
+          'aspect-square not-disabled:ripple size-10 grid place-items-center rounded-full disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer',
           color === 'ghost' ? 'bg-white/8' : 'bg-primary text-primary-fg',
           className
         )}
