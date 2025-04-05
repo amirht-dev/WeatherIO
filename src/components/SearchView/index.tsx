@@ -30,6 +30,7 @@ const SearchView = () => {
           <InputElement
             placeholder="search city..."
             autoComplete="off"
+            autoFocus
             value={term}
             onChange={(e) => setTerm(e.target.value)}
           />
