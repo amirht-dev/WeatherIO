@@ -1,12 +1,14 @@
 import useCombineRefs from '@/hooks/useCombineRefs';
 import useForecastQuery from '@/hooks/useForecastQuery';
 import useEmblaCarousel from 'embla-carousel-react';
+import range from 'lodash/range';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useInView } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { Card } from '../Card';
 import IconButton from '../IconButton';
+import Skeleton from '../Skeleton';
 
 const HourlyForecast = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -18,7 +20,7 @@ const HourlyForecast = () => {
     align: 'center',
   });
 
-  const { data, isSuccess } = useForecastQuery({
+  const { data, isLoading, isSuccess } = useForecastQuery({
     days: 7,
   });
 
@@ -75,19 +77,23 @@ const HourlyForecast = () => {
 
       <div className="overflow-hidden select-none" ref={combinedRef}>
         <div className="flex gap-3 laptop:gap-4">
-          {data?.forecast.forecastday[0].hour.map((item) => {
+          {(data?.forecast.forecastday[0].hour ?? range(0, 23)).map((item) => {
             const hour = Intl.NumberFormat('en-US', {
               minimumIntegerDigits: 2,
-            }).format(new Date(item.time).getHours());
+            }).format(
+              typeof item === 'number' ? item : new Date(item.time).getHours()
+            );
 
             const isCurrentHour = parseInt(hour) === currentHour;
+
+            const hourData = typeof item !== 'number' ? item : undefined;
 
             return (
               <div className="flex-[0_0_110px] space-y-4" key={hour}>
                 <Card
                   className={twJoin(
                     'flex flex-col items-center',
-                    isCurrentHour && 'border border-white/50'
+                    isCurrentHour && !isLoading && 'border border-white/50'
                   )}
                 >
                   <p className="text-body-3">
@@ -97,25 +103,35 @@ const HourlyForecast = () => {
                     </small>
                   </p>
 
-                  <img
-                    src={item.condition.icon}
-                    loading="lazy"
-                    alt={item.condition.text}
-                    className="my-3 w-12 desktop:w-8"
-                  />
+                  <Skeleton
+                    loading={isLoading}
+                    className="my-3 size-12 desktop:size-8"
+                  >
+                    <img
+                      src={hourData?.condition.icon}
+                      loading="lazy"
+                      alt={hourData?.condition.text}
+                      className="my-3 size-12 desktop:size-8"
+                    />
+                  </Skeleton>
 
                   <p className="text-body-3">
-                    {item.temp_c}
-                    <span className="text-surface-variant-fg">
-                      &deg;
-                      <small>C</small>
-                    </span>
+                    <Skeleton
+                      loading={isLoading}
+                      className="w-[40px] inline-block"
+                    >
+                      {hourData?.temp_c}
+                      <span className="text-surface-variant-fg text-nowrap">
+                        &deg;
+                        <small>C</small>
+                      </span>
+                    </Skeleton>
                   </p>
                 </Card>
                 <Card
                   className={twJoin(
                     'flex flex-col items-center',
-                    isCurrentHour && 'border border-white/50'
+                    isCurrentHour && !isLoading && 'border border-white/50'
                   )}
                 >
                   <p className="text-body-3">
@@ -125,22 +141,32 @@ const HourlyForecast = () => {
                     </small>
                   </p>
 
-                  <img
-                    src="/images/weather_icons/direction.png"
-                    loading="lazy"
-                    alt={`${item.wind_degree} deg`}
-                    className="my-3 w-12 desktop:w-8"
-                    style={{
-                      rotate: `${item.wind_degree}deg`,
-                    }}
-                    title={`${item.wind_degree}°`}
-                  />
+                  <Skeleton
+                    loading={isLoading}
+                    className="my-3 size-12 desktop:size-8"
+                  >
+                    <img
+                      src="/images/weather_icons/direction.png"
+                      loading="lazy"
+                      alt={`${hourData?.wind_degree} deg`}
+                      className="my-3 size-12 desktop:size-8"
+                      style={{
+                        rotate: `${hourData?.wind_degree}deg`,
+                      }}
+                      title={`${hourData?.wind_degree}°`}
+                    />
+                  </Skeleton>
 
                   <p className="text-body-3 text-nowrap">
-                    {item.wind_kph}
-                    <span className="text-surface-variant-fg">
-                      <small> km/h</small>
-                    </span>
+                    <Skeleton
+                      loading={isLoading}
+                      className="w-[40px] inline-block"
+                    >
+                      {hourData?.wind_kph}
+                      <span className="text-surface-variant-fg">
+                        <small> km/h</small>
+                      </span>
+                    </Skeleton>
                   </p>
                 </Card>
               </div>

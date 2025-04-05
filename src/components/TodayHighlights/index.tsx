@@ -18,6 +18,7 @@ import {
 import { twJoin } from 'tailwind-merge';
 import Badge from '../Badge';
 import { Card, CardTitle } from '../Card';
+import Skeleton from '../Skeleton';
 
 function TodayHighlights() {
   return (
@@ -72,21 +73,20 @@ const TodayHighlightCardTitle = ({
   );
 };
 
-const AirQualityItem = ({
-  label,
-  value,
-}: {
+type AirQualityItemProps = {
   label: ReactNode;
   value: ReactNode;
-}) => (
+};
+
+const AirQualityItem = ({ label, value }: AirQualityItemProps) => (
   <li className="flex gap-1 items-center grow laptop:flex-col-reverse">
-    <p className="text-title-1 desktop:text-body-1">{value}</p>
+    <p className="max-desktop:text-title-1 desktop:text-body-1">{value}</p>
     <p className="text-label-1 text-surface-variant-fg">{label}</p>
   </li>
 );
 
 const AirQualityIndex = () => {
-  const { data } = useCurrentWeatherQuery();
+  const { data, isLoading } = useCurrentWeatherQuery();
 
   const aqi = data?.current.air_quality;
 
@@ -99,9 +99,14 @@ const AirQualityIndex = () => {
       <div className="flex items-start justify-between">
         <TodayHighlightCardTitle>Air Quality Index</TodayHighlightCardTitle>
 
-        <Badge severity={aqiIndex} title={aqiContent.desc}>
-          {aqiContent.levelText}
-        </Badge>
+        <Skeleton
+          loading={isLoading}
+          className="rounded-full inline-block w-[70px] h-[26px]"
+        >
+          <Badge severity={aqiIndex} title={aqiContent.desc}>
+            {aqiContent.levelText}
+          </Badge>
+        </Skeleton>
       </div>
 
       <div className="flex items-center gap-4">
@@ -114,7 +119,11 @@ const AirQualityIndex = () => {
                 PM<sub>2.5</sub>
               </>
             }
-            value={aqi?.pm2_5}
+            value={
+              <Skeleton loading={isLoading} className="w-[60px]">
+                {aqi?.pm2_5}
+              </Skeleton>
+            }
           />
           <AirQualityItem
             label={
@@ -122,7 +131,11 @@ const AirQualityIndex = () => {
                 SO<sub>2</sub>
               </>
             }
-            value={aqi?.so2}
+            value={
+              <Skeleton loading={isLoading} className="w-[60px]">
+                {aqi?.so2}
+              </Skeleton>
+            }
           />
           <AirQualityItem
             label={
@@ -130,7 +143,11 @@ const AirQualityIndex = () => {
                 NO<sub>2</sub>
               </>
             }
-            value={aqi?.no2}
+            value={
+              <Skeleton loading={isLoading} className="w-[60px]">
+                {aqi?.no2}
+              </Skeleton>
+            }
           />
           <AirQualityItem
             label={
@@ -138,7 +155,11 @@ const AirQualityIndex = () => {
                 O<sub>3</sub>
               </>
             }
-            value={aqi?.o3}
+            value={
+              <Skeleton loading={isLoading} className="w-[60px]">
+                {aqi?.o3}
+              </Skeleton>
+            }
           />
         </ul>
       </div>
@@ -147,7 +168,7 @@ const AirQualityIndex = () => {
 };
 
 const SunriseAndSunset = () => {
-  const { data } = useAstronomyQuery();
+  const { data, isLoading } = useAstronomyQuery();
 
   const sunrise = data?.astronomy.astro.sunrise.split(' ');
   const sunset = data?.astronomy.astro.sunset.split(' ');
@@ -163,8 +184,16 @@ const SunriseAndSunset = () => {
           <div className="">
             <p className="text-label-1 text-surface-variant-fg">Sunrise</p>
             <p className="text-title-1 desktop:text-body-1">
-              {sunrise?.[0]}
-              <small className="text-surface-variant-fg"> {sunrise?.[1]}</small>
+              <Skeleton
+                className="w-[80px] laptop:w-[140px] desktop:w-[100px]"
+                loading={isLoading}
+              >
+                {sunrise?.[0]}
+                <small className="text-surface-variant-fg">
+                  {' '}
+                  {sunrise?.[1]}
+                </small>
+              </Skeleton>
             </p>
           </div>
         </div>
@@ -175,8 +204,16 @@ const SunriseAndSunset = () => {
           <div className="">
             <p className="text-label-1 text-surface-variant-fg">Sunset</p>
             <p className="text-title-1 desktop:text-body-1">
-              {sunset?.[0]}
-              <small className="text-surface-variant-fg"> {sunset?.[1]}</small>
+              <Skeleton
+                className="w-[80px] laptop:w-[140px] desktop:w-[100px]"
+                loading={isLoading}
+              >
+                {sunset?.[0]}
+                <small className="text-surface-variant-fg">
+                  {' '}
+                  {sunset?.[1]}
+                </small>
+              </Skeleton>
             </p>
           </div>
         </div>
@@ -186,7 +223,7 @@ const SunriseAndSunset = () => {
 };
 
 const Humidity = () => {
-  const { data } = useCurrentWeatherQuery();
+  const { data, isLoading } = useCurrentWeatherQuery();
 
   return (
     <TodayHighlightCard>
@@ -195,7 +232,12 @@ const Humidity = () => {
       <div className="flex items-center gap-4 justify-between">
         <Droplet className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
         <p className="text-title-1 desktop:text-body-1">
-          {data?.current.humidity}
+          <Skeleton
+            loading={isLoading}
+            className="w-[40px] tablet:max-desktop:w-[60px] inline-block"
+          >
+            {data?.current.humidity}
+          </Skeleton>
           <small className="text-surface-variant-fg">%</small>
         </p>
       </div>
@@ -204,7 +246,7 @@ const Humidity = () => {
 };
 
 const Pressure = () => {
-  const { data } = useCurrentWeatherQuery();
+  const { data, isLoading } = useCurrentWeatherQuery();
 
   return (
     <TodayHighlightCard>
@@ -213,7 +255,12 @@ const Pressure = () => {
       <div className="flex items-center gap-4 justify-between">
         <Waves className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
         <p className="text-title-1 desktop:text-body-1">
-          {data?.current.pressure_mb}
+          <Skeleton
+            loading={isLoading}
+            className="w-[50px] tablet:max-desktop:w-[100px] inline-block"
+          >
+            {data?.current.pressure_mb}
+          </Skeleton>
           <small className="text-surface-variant-fg">mb</small>
         </p>
       </div>
@@ -222,7 +269,7 @@ const Pressure = () => {
 };
 
 const Visibility = () => {
-  const { data } = useCurrentWeatherQuery();
+  const { data, isLoading } = useCurrentWeatherQuery();
 
   return (
     <TodayHighlightCard>
@@ -231,7 +278,12 @@ const Visibility = () => {
       <div className="flex items-center gap-4 justify-between">
         <Eye className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
         <p className="text-title-1 desktop:text-body-1">
-          {data?.current.vis_km}
+          <Skeleton
+            loading={isLoading}
+            className="w-[40px] tablet:max-desktop:w-[60px] inline-block"
+          >
+            {data?.current.vis_km}
+          </Skeleton>
           <small className="text-surface-variant-fg">km</small>
         </p>
       </div>
@@ -240,7 +292,7 @@ const Visibility = () => {
 };
 
 const FeelsLike = () => {
-  const { data } = useCurrentWeatherQuery();
+  const { data, isLoading } = useCurrentWeatherQuery();
 
   return (
     <TodayHighlightCard>
@@ -249,7 +301,12 @@ const FeelsLike = () => {
       <div className="flex items-center gap-4 justify-between">
         <Thermometer className="size-8 tablet:size-9 laptop:max-desktop:size-12" />
         <p className="text-title-1 desktop:text-body-1">
-          {data?.current.feelslike_c}
+          <Skeleton
+            loading={isLoading}
+            className="w-[40px] tablet:max-desktop:w-[60px] inline-block"
+          >
+            {data?.current.feelslike_c}
+          </Skeleton>
           <span className="text-surface-variant-fg">&deg;c</span>
         </p>
       </div>
