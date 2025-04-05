@@ -1,13 +1,17 @@
 import useCombineRefs from '@/hooks/useCombineRefs';
 import useForecastQuery from '@/hooks/useForecastQuery';
 import useEmblaCarousel from 'embla-carousel-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useInView } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { Card } from '../Card';
+import IconButton from '../IconButton';
 
 const HourlyForecast = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const prevBtnRef = useRef<HTMLButtonElement>(null);
+  const nextBtnRef = useRef<HTMLButtonElement>(null);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     skipSnaps: true,
@@ -21,6 +25,19 @@ const HourlyForecast = () => {
   const isInView = useInView(ref, { once: true });
 
   const currentHour = new Date().getHours();
+
+  useEffect(() => {
+    const event = emblaApi?.on('select', (api) => {
+      if (prevBtnRef.current)
+        prevBtnRef.current.disabled = !api.canScrollPrev();
+      if (nextBtnRef.current)
+        nextBtnRef.current.disabled = !api.canScrollNext();
+    });
+
+    return () => {
+      event?.clear();
+    };
+  }, [emblaApi]);
 
   useEffect(() => {
     if (isSuccess && isInView) {
@@ -42,7 +59,19 @@ const HourlyForecast = () => {
       aria-label="hourly forecast"
       className="overflow-hidden order-4 tablet:max-desktop:col-span-2"
     >
-      <h2 className="text-title-2 mb-2 tablet:mb-3">Today at</h2>
+      <div className="flex items-center justify-between mb-2 tablet:mb-3">
+        <h2 className="text-title-2">Today at</h2>
+
+        <div className="flex items-center gap-2">
+          <IconButton ref={prevBtnRef} onClick={() => emblaApi?.scrollPrev()}>
+            <ChevronLeft />
+          </IconButton>
+
+          <IconButton ref={nextBtnRef} onClick={() => emblaApi?.scrollNext()}>
+            <ChevronRight />
+          </IconButton>
+        </div>
+      </div>
 
       <div className="overflow-hidden select-none" ref={combinedRef}>
         <div className="flex gap-3 laptop:gap-4">
