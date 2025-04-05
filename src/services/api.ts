@@ -4,7 +4,7 @@ import { Merge, MergeDeep } from 'type-fest';
 const API_KEY = '468bde4f35c04e6cb70162009250104';
 
 const weatherAxios = axios.create({
-  baseURL: 'http://api.weatherapi.com/v1',
+  baseURL: 'https://api.weatherapi.com/v1',
   params: {
     key: API_KEY,
   },
