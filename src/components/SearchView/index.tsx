@@ -43,7 +43,7 @@ const SearchView = () => {
             data.length ? (
               <SearchList>
                 {data.map((item) => (
-                  <ViewClose className="block w-full" key={item.id}>
+                  <ViewClose className="block w-full" key={item.id} asChild>
                     <SearchItem location={item} />
                   </ViewClose>
                 ))}

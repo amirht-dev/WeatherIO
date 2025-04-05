@@ -149,6 +149,9 @@ const AirQualityIndex = () => {
 const SunriseAndSunset = () => {
   const { data } = useAstronomyQuery();
 
+  const sunrise = data?.astronomy.astro.sunrise.split(' ');
+  const sunset = data?.astronomy.astro.sunset.split(' ');
+
   return (
     <TodayHighlightCard className="tablet:col-span-2">
       <TodayHighlightCardTitle>Sunrise & Sunset</TodayHighlightCardTitle>
@@ -160,15 +163,8 @@ const SunriseAndSunset = () => {
           <div className="">
             <p className="text-label-1 text-surface-variant-fg">Sunrise</p>
             <p className="text-title-1 desktop:text-body-1">
-              {data?.astronomy.astro.sunrise
-                .split(' ')
-                .map((val, idx) =>
-                  idx === 0 ? (
-                    val
-                  ) : (
-                    <small className="text-surface-variant-fg"> {val}</small>
-                  )
-                )}
+              {sunrise?.[0]}
+              <small className="text-surface-variant-fg"> {sunrise?.[1]}</small>
             </p>
           </div>
         </div>
@@ -179,15 +175,8 @@ const SunriseAndSunset = () => {
           <div className="">
             <p className="text-label-1 text-surface-variant-fg">Sunset</p>
             <p className="text-title-1 desktop:text-body-1">
-              {data?.astronomy.astro.sunset
-                .split(' ')
-                .map((val, idx) =>
-                  idx === 0 ? (
-                    val
-                  ) : (
-                    <small className="text-surface-variant-fg"> {val}</small>
-                  )
-                )}
+              {sunset?.[0]}
+              <small className="text-surface-variant-fg"> {sunset?.[1]}</small>
             </p>
           </div>
         </div>

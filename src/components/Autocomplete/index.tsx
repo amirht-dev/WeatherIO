@@ -87,27 +87,28 @@ type AutocompleteListProps = PropsWithAsChild<
   >
 >;
 
-const AutocompleteList = forwardRef(
-  ({ asChild, popoverContentProps, ...props }: AutocompleteListProps) => {
-    const Comp = asChild ? Slot : 'ul';
+const AutocompleteList = ({
+  asChild,
+  popoverContentProps,
+  ...props
+}: AutocompleteListProps) => {
+  const Comp = asChild ? Slot : 'ul';
 
-    return (
-      <PopoverContent
-        onOpenAutoFocus={(e) => e.preventDefault()}
-        onFocusOutside={(e) => e.preventDefault()}
-        sideOffset={0}
-        {...popoverContentProps}
-        className={twMerge(
-          'w-(--radix-popover-trigger-width) max-h-[250px] overflow-auto bg-surface rounded-b-xl p-0',
-          popoverContentProps?.className
-        )}
-      >
-        <Comp {...props} />
-      </PopoverContent>
-    );
-  }
-);
-AutocompleteList.displayName = 'AutocompleteList';
+  return (
+    <PopoverContent
+      onOpenAutoFocus={(e) => e.preventDefault()}
+      onFocusOutside={(e) => e.preventDefault()}
+      sideOffset={0}
+      {...popoverContentProps}
+      className={twMerge(
+        'w-(--radix-popover-trigger-width) max-h-[250px] overflow-auto bg-surface rounded-b-xl p-0',
+        popoverContentProps?.className
+      )}
+    >
+      <Comp {...props} />
+    </PopoverContent>
+  );
+};
 
 type AutocompleteItemProps = PropsWithAsChild<ComponentPropsWithoutRef<'li'>>;
 
