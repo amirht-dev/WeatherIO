@@ -1,23 +1,41 @@
 import SearchProvider from '@/contexts/search';
+import useGeoLocationCoords from '@/hooks/useGeoLocationCoords';
 import useLocationSearchParam from '@/hooks/useLocationSearchParam';
-import { getCurrentPosition } from '@/utils';
 import { LocateFixedIcon } from 'lucide-react';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import Button from '../Button';
 import IconButton from '../IconButton';
+import Loading from '../Loading';
 import Logo from '../Logo';
 import SearchBox from '../SearchBox';
 import SearchView from '../SearchView';
 
 const Header = () => {
-  const [, setLocation] = useLocationSearchParam();
+  const [location, setLocation] = useLocationSearchParam();
 
-  const handleSetCurrentPosition = async () => {
-    const {
-      coords: { latitude, longitude },
-    } = await getCurrentPosition();
+  const { status, coords, error, getGeoLocation } = useGeoLocationCoords({
+    getOnMount: false,
+  });
 
-    setLocation(`${latitude},${longitude}`);
-  };
+  useEffect(() => {
+    if (status === 'error') {
+      toast.error(error.message);
+    }
+  }, [status, error, coords]);
+
+  useEffect(() => {
+    if (status === 'success' && !location) {
+      setLocation(`${coords.latitude},${coords.longitude}`);
+    }
+  }, [status, setLocation, location, coords]);
+
+  const Icon =
+    status === 'pending' ? (
+      <Loading className="border-primary-fg" />
+    ) : (
+      <LocateFixedIcon />
+    );
 
   return (
     <SearchProvider>
@@ -33,15 +51,15 @@ const Header = () => {
             <IconButton
               color="primary"
               className="tablet:hidden"
-              onClick={handleSetCurrentPosition}
+              onClick={getGeoLocation}
             >
-              <LocateFixedIcon />
+              {Icon}
             </IconButton>
 
             <Button
-              prefixIcon={<LocateFixedIcon />}
+              prefixIcon={Icon}
               className="max-tablet:hidden"
-              onClick={handleSetCurrentPosition}
+              onClick={getGeoLocation}
             >
               Current Location
             </Button>
