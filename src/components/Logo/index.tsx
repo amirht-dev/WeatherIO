@@ -1,10 +1,11 @@
 import { ComponentPropsWithoutRef, forwardRef } from 'react';
+import { Link } from 'react-router';
 
 export type LogoProps = ComponentPropsWithoutRef<'a'>;
 
 const Logo = forwardRef<HTMLAnchorElement, LogoProps>((props, ref) => {
   return (
-    <a href="/" {...props} ref={ref}>
+    <Link to="/" {...props} ref={ref}>
       <img
         src="/images/logo.png"
         alt="logo"
@@ -12,7 +13,7 @@ const Logo = forwardRef<HTMLAnchorElement, LogoProps>((props, ref) => {
         width={364}
         height={58}
       />
-    </a>
+    </Link>
   );
 });
 
