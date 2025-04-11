@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { getLocations, SearchLocation } from '@/services/api';
 import { createCTX } from '@/utils';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { skipToken, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useDebounce } from '@uidotdev/usehooks';
 import { PropsWithChildren, useState } from 'react';
 
@@ -25,8 +25,9 @@ const SearchProvider = (props: PropsWithChildren) => {
 
   const query = useQuery({
     queryKey: ['search', debouncedTerm],
-    queryFn: ({ signal }) => getLocations(term, signal),
-    enabled: !!debouncedTerm && !isDebouncing,
+    queryFn: debouncedTerm
+      ? ({ signal }) => getLocations(debouncedTerm, signal)
+      : skipToken,
   });
 
   return (

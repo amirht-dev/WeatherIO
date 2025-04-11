@@ -17,7 +17,7 @@ const SearchBox = () => {
 
   const [open, setOpen] = useState(!!term);
 
-  const { isLoading, data } = query;
+  const { isLoading, isSuccess, data } = query;
 
   const handleSearchItemClick = () => {
     setOpen(false);
@@ -56,22 +56,25 @@ const SearchBox = () => {
           <div className="flex items-center justify-center h-[100px]">
             <Loading />
           </div>
-        ) : data?.length ? (
-          <SearchList>
-            {data?.map((item) => (
-              <AutocompleteItem
-                asChild
-                key={item.id}
-                onClick={handleSearchItemClick}
-              >
-                <SearchItem location={item} />
-              </AutocompleteItem>
-            ))}
-          </SearchList>
         ) : (
-          <div className="flex items-center justify-center h-[100px] text-surface-variant-fg italic">
-            city not exists
-          </div>
+          isSuccess &&
+          (data.length ? (
+            <SearchList>
+              {data.map((item) => (
+                <AutocompleteItem
+                  asChild
+                  key={item.id}
+                  onClick={handleSearchItemClick}
+                >
+                  <SearchItem location={item} />
+                </AutocompleteItem>
+              ))}
+            </SearchList>
+          ) : (
+            <div className="flex items-center justify-center h-[100px] text-surface-variant-fg italic">
+              city not exists
+            </div>
+          ))
         )}
       </AutocompleteList>
     </Autocomplete>

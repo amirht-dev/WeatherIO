@@ -10,7 +10,7 @@ import { View, ViewClose, ViewContent, ViewTrigger } from '../View';
 const SearchView = () => {
   const { term, setTerm, debouncedTerm, query } = useSearchContext();
 
-  const { isLoading, data } = query;
+  const { isLoading, isSuccess, data } = query;
 
   return (
     <View className="laptop:hidden">
@@ -40,21 +40,19 @@ const SearchView = () => {
             <div className="flex items-center justify-center h-[100px]">
               <Loading />
             </div>
-          ) : data ? (
-            data.length ? (
-              <SearchList>
-                {data.map((item) => (
-                  <ViewClose className="block w-full" key={item.id} asChild>
-                    <SearchItem location={item} />
-                  </ViewClose>
-                ))}
-              </SearchList>
-            ) : (
-              <div className="flex items-center justify-center h-[100px] text-surface-variant-fg italic">
-                city not exists
-              </div>
-            )
-          ) : null)}
+          ) : isSuccess && data.length ? (
+            <SearchList>
+              {data.map((item) => (
+                <ViewClose className="block w-full" key={item.id} asChild>
+                  <SearchItem location={item} />
+                </ViewClose>
+              ))}
+            </SearchList>
+          ) : (
+            <div className="flex items-center justify-center h-[100px] text-surface-variant-fg italic">
+              city not exists
+            </div>
+          ))}
       </ViewContent>
     </View>
   );
