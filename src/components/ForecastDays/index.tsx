@@ -29,7 +29,7 @@ const ForecastDays = () => {
                 <div className="flex items-center gap-2">
                   <Skeleton loading={isLoading} className="size-9">
                     <img
-                      src={day?.day.condition.icon}
+                      src={`https:${day?.day.condition.icon}`}
                       width={36}
                       height={36}
                       alt={day?.day.condition.text}

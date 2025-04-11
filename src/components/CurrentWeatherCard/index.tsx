@@ -44,7 +44,7 @@ const CurrentWeatherCard = () => {
           loading={isLoading}
         >
           <img
-            src={data?.current.condition.icon}
+            src={`https:${data?.current.condition.icon}`}
             width={64}
             height={64}
             alt={data?.current.condition.text}

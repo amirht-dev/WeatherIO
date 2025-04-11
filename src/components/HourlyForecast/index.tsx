@@ -108,7 +108,7 @@ const HourlyForecast = () => {
                     className="my-3 size-12 desktop:size-8"
                   >
                     <img
-                      src={hourData?.condition.icon}
+                      src={`https:${hourData?.condition.icon}`}
                       loading="lazy"
                       alt={hourData?.condition.text}
                       className="my-3 size-12 desktop:size-8"
