@@ -12,9 +12,9 @@ type SkeletonProps = Merge<
 function Skeleton({ className, children, loading, ...props }: SkeletonProps) {
   if (loading || loading === undefined)
     return (
-      <div
+      <span
         className={twMerge(
-          'animate-pulse h-[calc(var(--font-size,1em)*var(--tw-leading,var(--line-height,1.5)))] bg-surface-variant-fg/25 rounded-[7px]',
+          'animate-pulse block h-[calc(var(--font-size,1em)*var(--tw-leading,var(--line-height,1.5)))] bg-surface-variant-fg/25 rounded-[7px]',
           className
         )}
         {...props}
